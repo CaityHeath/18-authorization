@@ -3,11 +3,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const SINGLE_USE_TOKENS = !!process.env.SINGLE_USE_TOKENS;
 const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '5m';
-const SECRET = process.env.SECRET || 'foobar';
 
+//let secret = setInterval(()=> console.log(faker.random.word()), 200000).toString();
+
+let SECRET = process.env.SECRET;
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
@@ -45,6 +46,24 @@ users.statics.createFromOauth = function(email) {
 
 };
 
+
+/**
+ *This function is the heart of my 2nd bearer token security feature. It checks whether or not the token exists in the usedToken set. If it doesn't, the newly generated token gets added. If it does exist then an error is thrown. This limits the user to only being allowed to sign in with that password once. 
+ *
+ * @param {} token 
+ * @returns either an error or the id associated with the user's account
+ */
+users.statics.authenticateBearer = function(token){
+  if(usedTokens.has(token)) {
+    throw 'Resource Not Available';
+  } else {
+    usedTokens.add(token);
+    let parsedToken = jwt.verify(token, SECRET);
+    let query = {_id:parsedToken.id};
+    return this.findOne(query);    
+  }
+};
+
 users.statics.authenticateBasic = function(auth) {
   let query = {username:auth.username};
   return this.findOne(query)
@@ -57,6 +76,12 @@ users.methods.comparePassword = function(password) {
     .then( valid => valid ? this : null);
 };
 
+/**
+ *This function handles my first bearer token security feature. At the point of token creation, the token is assigned an expiration date. In this case I set token expiration to be 600 seconds or 10 minutes. 
+ *
+ * @param {*} type 
+ * @returns a token 
+ */
 users.methods.generateToken = function(type) {
   
   let token = {
@@ -65,7 +90,7 @@ users.methods.generateToken = function(type) {
     type: type || 'user',
   };
   
-  return jwt.sign(token, SECRET);
+  return jwt.sign(token, SECRET, {expiresIn:600}); //expiration will be the third parameter
 };
 
 users.methods.generateKey = function() {

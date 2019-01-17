@@ -12,6 +12,8 @@ module.exports = (req, res, next) => {
     switch( authType.toLowerCase() ) {
       case 'basic': 
         return _authBasic(authString);
+      case 'bearer':
+        return _authBearer(authString);
       default: 
         return _authError();
     }
@@ -32,6 +34,14 @@ module.exports = (req, res, next) => {
       .then(user => _authenticate(user) )
       .catch(next);
   }
+
+  function _authBearer(str){
+    console.log('in _authBearer');
+    return User.authenticateBearer(str)
+    .then(user => _authenticate(user))
+    .catch(next);
+  }
+
 
   function _authenticate(user) {
     console.log({user});
