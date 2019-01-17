@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
+app.use('/doc', express.static('doc'));
 // Routes
 app.use(authRouter);
 
