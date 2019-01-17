@@ -6,41 +6,54 @@
 ### Author: Student/Group Name
 
 ### Links and Resources
-* [repo](http://xyz.com)
+* [Repository](https://github.com/CaityHeath/18-authorization)
 * [travis](http://xyz.com)
-* [back-end](http://xyz.com) (when applicable)
-* [front-end](http://xyz.com) (when applicable)
+* [Heroku back-end](https://auth-bearer.herokuapp.com/) 
+
 
 #### Documentation
-* [swagger](http://xyz.com) (API assignments only)
 * [jsdoc](http://xyz.com) (All assignments)
 
 ### Modules
-#### `modulename.js`
+#### `middleware.js`
 ##### Exported Values and Methods
 
-###### `foo(thing) -> string`
-Usage Notes or examples
+###### `auth(req, res, next) -> string`
+This module handles authenticating the password and generating a token. 
 
-###### `bar(array) -> array`
-Usage Notes or examples
+#### `users-model.js`
+##### Exported Values and Methods
+
+###### `mongoose.model('users', users)
+This module creates an an entry into our store collection in mongoose. It also handles token generation. Two auth bearer security features have been implemented in the authenticateBearer and generateToken methods. 
+
+
 
 ### Setup
 #### `.env` requirements
-* `PORT` - Port Number
-* `MONGODB_URI` - URL to the running mongo instance/db
+* `PORT` 8080
+* `MONGODB_URI` store
+* `SECRET` Assigned by web host
 
 #### Running the app
 * `npm start`
-* Endpoint: `/foo/bar/`
-  * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
+* Endpoint: `/signup`
+  * post 
+* Endpoint: `/signin`
+  * post
+* Endpoint: `/testing`
+  * get
+* Endpoint: `/oauth`
+  * get
   
 #### Tests
-* How do you run tests?
-* What assertions were made?
-* What assertions need to be / should be made?
+* To run tests simply type npm start or reference the travis link above. 
+* Tests were written for the middleware and router. Listed below are the tests cases. 
+  * login for a user with the incorrect basic credentials throws an error
+  * logs in a user with the right credentials
+  * User can Sign up 
+  * User can Sign in 
+
 
 #### UML
-Link to an image of the UML for your application and response to events
+![](assets/lab18uml.jpg)
