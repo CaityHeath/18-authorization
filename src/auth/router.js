@@ -24,6 +24,10 @@ authRouter.post('/signin', auth, (req, res, next) => {
   res.send(req.token);
 });
 
+authRouter.get('/testing', auth, (req, res, next) => {
+  res.status(200).send('ok 🤞');
+})
+
 authRouter.get('/oauth', (req,res,next) => {
   oauth.authorize(req)
     .then( token => {
