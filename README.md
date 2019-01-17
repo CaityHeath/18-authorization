@@ -22,9 +22,9 @@
 This module handles authenticating the password and generating a token. 
 
 #### `users-model.js`
-##### Exported Values and Methods`
+##### Exported Values and Methods
 
-###### `mongoose.model('users', users)
+###### `mongoose.model('users', users)`
 This module creates an an entry into our store collection in mongoose. It also handles token generation. Two auth bearer security features have been implemented in the authenticateBearer and generateToken methods. 
 
 
