@@ -7,12 +7,12 @@
 
 ### Links and Resources
 * [Repository](https://github.com/CaityHeath/18-authorization)
-* [travis](http://xyz.com)
+* Travis [![Build Status](https://www.travis-ci.com/CaityHeath/18-authorization.svg?branch=master)](https://www.travis-ci.com/CaityHeath/18-authorization)
 * [Heroku back-end](https://auth-bearer.herokuapp.com/) 
 
 
 #### Documentation
-* [jsdoc](http://xyz.com) (All assignments)
+* [jsdoc](https://auth-bearer.herokuapp.com/doc)
 
 ### Modules
 #### `middleware.js`
@@ -35,6 +35,8 @@ This module creates an an entry into our store collection in mongoose. It also h
 * `MONGODB_URI` store
 * `SECRET` Assigned by web host
 
+Run `npm i` to install necessary node dependency packages. 
+
 #### Running the app
 * `npm start`
 * Endpoint: `/signup`
@@ -44,15 +46,16 @@ This module creates an an entry into our store collection in mongoose. It also h
 * Endpoint: `/testing`
   * get
 * Endpoint: `/oauth`
-  * get
+  * get 
   
 #### Tests
-* To run tests simply type npm start or reference the travis link above. 
+* Image of the build logs is posted directly below the list of tests. 
 * Tests were written for the middleware and router. Listed below are the tests cases. 
   * login for a user with the incorrect basic credentials throws an error
   * logs in a user with the right credentials
   * User can Sign up 
   * User can Sign in 
+
 
 
 #### UML
